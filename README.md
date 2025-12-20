@@ -1,20 +1,51 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# HandyCopy ✨
 
-# Run and deploy your AI Studio app
+HandyCopy is a clean and simple web tool to copy emojis and fancy fonts instantly.
 
-This contains everything you need to run your app locally.
+No login. No ads. Just copy & paste.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1_mvoEya9t7CGtUhJ9aNgnBz1To5s9i09
+👉 Live demo: https://handy-copy-nine.vercel.app/
 
-## Run Locally
+---
 
-**Prerequisites:**  Node.js
+## 🚀 Features
 
+- 📚 Emoji library with categories
+- 🕘 Recently used emojis (saved locally)
+- ✍️ Fancy font styles (Unicode-based)
+- 📋 One-click copy to clipboard
+- 📱 Fully responsive (mobile / tablet / desktop)
+- ⚡ Fast, lightweight, and privacy-friendly
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+---
+
+## 🛠 Built With
+
+- React + TypeScript
+- Vite
+- Tailwind CSS
+- Unicode emoji & font mapping
+- LocalStorage (no backend)
+
+---
+
+## 🎯 Why HandyCopy?
+
+Many emoji / font tools are slow, ad-heavy, or require login.
+
+HandyCopy focuses on:
+
+- Speed
+- Simplicity
+- Zero friction
+
+Open → Copy → Paste → Done.
+
+---
+
+## 📦 Local Development
+
+```bash
+npm install
+npm run dev
+```
