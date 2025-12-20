@@ -64,9 +64,6 @@ const App: React.FC = () => {
               {activeCategory === Category.FONTS && "Fancy Font Styles"}
               {/*{activeCategory === Category.AI_SEARCH && "Magic AI Finder"}*/}
             </h1>
-            <p className="text-xs text-orange-400 font-bold uppercase tracking-wide">
-              Click to copy
-            </p>
           </div>
 
           <div className="relative w-64 md:w-96 group">
