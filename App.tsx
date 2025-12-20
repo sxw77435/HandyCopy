@@ -61,7 +61,7 @@ const App: React.FC = () => {
           <div className="flex flex-col">
             <h1 className="text-2xl font-black text-stone-800 tracking-tight">
               {activeCategory === Category.EMOJI && "Emoji Library"}
-              {activeCategory === Category.FONTS && "Fancy Font Styles"}
+              {activeCategory === Category.FONTS && "Fancy Font"}
               {/*{activeCategory === Category.AI_SEARCH && "Magic AI Finder"}*/}
             </h1>
           </div>
