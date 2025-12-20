@@ -65,7 +65,7 @@ const App: React.FC = () => {
               {/*{activeCategory === Category.AI_SEARCH && "Magic AI Finder"}*/}
             </h1>
             <p className="text-xs text-orange-400 font-bold uppercase tracking-wide">
-              Click to copy, express with joy
+              Click to copy
             </p>
           </div>
 
