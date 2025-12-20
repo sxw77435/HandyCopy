@@ -18,8 +18,8 @@ const EmojiGrid: React.FC<EmojiGridProps> = ({
   const filteredEmojis = useMemo(() => {
     return EMOJI_DATA.filter(
       (emoji) =>
-        emoji.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        emoji.category.toLowerCase().includes(searchQuery.toLowerCase())
+        (emoji.name ?? "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (emoji.category ?? "").toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [searchQuery]);
 
