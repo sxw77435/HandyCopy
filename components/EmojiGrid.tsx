@@ -43,7 +43,7 @@ const EmojiGrid: React.FC<EmojiGridProps> = ({
   }
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-12 pt-6 sm:pt-0">
       {/* ✅ Recently Used */}
       {recentEmojis.length > 0 && searchQuery.trim() === "" && (
         <div className="space-y-6">
