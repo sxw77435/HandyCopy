@@ -57,7 +57,7 @@ const App: React.FC = () => {
 
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col min-w-0">
-        <header className="h-20 border-b border-orange-100 bg-white/60 backdrop-blur-md flex items-center justify-between px-8 shrink-0 sticky top-0 z-10">
+        <header className="h-20 border-b border-orange-100 bg-white/60 backdrop-blur-md flex items-center justify-between px-8 shrink-0 ">
           <div className="flex flex-col">
             <h1 className="text-2xl font-black text-stone-800 tracking-tight">
               {activeCategory === Category.EMOJI && "Emoji Library"}
