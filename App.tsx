@@ -77,6 +77,7 @@ const App: React.FC = () => {
         <header className="h-20 border-b border-orange-100 bg-white/60 backdrop-blur-md flex items-center px-8 shrink-0">
           <h1 className="text-2xl font-black text-stone-800 tracking-tight">
             {activeCategory === Category.EMOJI && "Emoji Library"}
+            {activeCategory === Category.KAOMOJI && "Cute Kaomoji"}
             {activeCategory === Category.FONTS && "Fancy Font"}
           </h1>
         </header>
