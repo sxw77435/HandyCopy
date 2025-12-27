@@ -4,12 +4,17 @@ import Sidebar from "./components/Sidebar";
 import EmojiGrid from "./components/EmojiGrid";
 import FontStyles from "./components/FontStyles";
 import Toast from "./components/Toast";
+import KaomojiGrid from "./components/KaomojiGrid";
 //import AISearch from "./components/AISearch";
 
 const App: React.FC = () => {
   // ✅ recentEmojis 一定要在这里
   const [recentEmojis, setRecentEmojis] = useState<string[]>(() => {
     return JSON.parse(localStorage.getItem("recentEmojis") || "[]");
+  });
+
+  const [recentKaomoji, setRecentKaomoji] = useState<string[]>(() => {
+    return JSON.parse(localStorage.getItem("recentKaomoji") || "[]");
   });
 
   const [activeCategory, setActiveCategory] = useState<Category>(
@@ -36,6 +41,17 @@ const App: React.FC = () => {
             const filtered = prev.filter((e) => e !== text);
             const updated = [text, ...filtered].slice(0, 30);
             localStorage.setItem("recentEmojis", JSON.stringify(updated));
+            return updated;
+          });
+        }
+
+        if (activeCategory === Category.KAOMOJI) {
+          setRecentKaomoji((prev) => {
+            const updated = [text, ...prev.filter((e) => e !== text)].slice(
+              0,
+              30
+            );
+            localStorage.setItem("recentKaomoji", JSON.stringify(updated));
             return updated;
           });
         }
@@ -78,6 +94,10 @@ const App: React.FC = () => {
                 onCopy={handleCopy}
               />
             )}
+            {activeCategory === Category.KAOMOJI && (
+              <KaomojiGrid onCopy={handleCopy} recentKaomoji={recentKaomoji} />
+            )}
+
             {activeCategory === Category.FONTS && (
               <FontStyles searchQuery={searchQuery} onCopy={handleCopy} />
             )}

@@ -13,6 +13,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const navItems = [
     { id: Category.EMOJI, label: "Emoji Library", icon: "fa-face-smile" },
+    { id: Category.KAOMOJI, label: "Kaomoji", icon: "fa-heart" },
     { id: Category.FONTS, label: "Fancy Fonts", icon: "fa-font" },
     //magic search暂时不需要
     //{ id: Category.AI_SEARCH, label: "Magic Search", icon: "fa-wand-magic-sparkles" },

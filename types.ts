@@ -1,6 +1,7 @@
 
 export enum Category {
   EMOJI = 'EMOJI',
+  KAOMOJI = "KAOMOJI",
   FONTS = 'FONTS',
   SYMBOLS = 'SYMBOLS',
   //AI_SEARCH = 'AI_SEARCH'
