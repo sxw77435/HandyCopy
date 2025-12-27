@@ -8,12 +8,14 @@ interface EmojiGridProps {
   searchQuery: string;
   recentEmojis: string[];
   onCopy: (char: string) => void;
+  onSearchChange: (value: string) => void;
 }
 
 const EmojiGrid: React.FC<EmojiGridProps> = ({
   searchQuery,
   recentEmojis,
   onCopy,
+  onSearchChange,
 }) => {
   const filteredEmojis = useMemo(() => {
     return EMOJI_DATA.filter(
@@ -44,6 +46,23 @@ const EmojiGrid: React.FC<EmojiGridProps> = ({
 
   return (
     <div className="space-y-12 pt-6 sm:pt-0">
+      {/* 🔍 Search Bar */}
+      <div className="sticky top-0 z-20 bg-[#fffaf5] pt-2 pb-4">
+        <div className="relative max-w-xl mx-auto">
+          <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-stone-300">
+            <i className="fas fa-search"></i>
+          </span>
+
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => onSearchChange(e.target.value)}
+            placeholder="Search emojis..."
+            className="w-full pl-11 pr-4 py-3 rounded-2xl border border-orange-200 bg-white focus:outline-none focus:ring-4 focus:ring-orange-300"
+          />
+        </div>
+      </div>
+
       {/* ✅ Recently Used */}
       {recentEmojis.length > 0 && searchQuery.trim() === "" && (
         <div className="space-y-6">

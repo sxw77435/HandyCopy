@@ -57,29 +57,11 @@ const App: React.FC = () => {
 
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col min-w-0">
-        <header className="h-20 border-b border-orange-100 bg-white/60 backdrop-blur-md flex items-center justify-between px-8 shrink-0 ">
-          <div className="flex flex-col">
-            <h1 className="text-2xl font-black text-stone-800 tracking-tight">
-              {activeCategory === Category.EMOJI && "Emoji Library"}
-              {activeCategory === Category.FONTS && "Fancy Font"}
-              {/*{activeCategory === Category.AI_SEARCH && "Magic AI Finder"}*/}
-            </h1>
-          </div>
-
-          <div className="relative w-64 md:w-96 group">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-stone-300 group-focus-within:text-orange-500 transition-colors">
-              <i className="fas fa-search"></i>
-            </span>
-            <input
-              type="text"
-              className="block w-full pl-11 pr-4 py-3 border border-orange-100 rounded-2xl bg-stone-50/50 focus:outline-none focus:ring-4 focus:ring-orange-500/10 focus:bg-white focus:border-orange-400 transition-all text-sm"
-              placeholder={`Search ${
-                activeCategory === Category.EMOJI ? "emojis" : "styles"
-              }...`}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
+        <header className="h-20 border-b border-orange-100 bg-white/60 backdrop-blur-md flex items-center px-8 shrink-0">
+          <h1 className="text-2xl font-black text-stone-800 tracking-tight">
+            {activeCategory === Category.EMOJI && "Emoji Library"}
+            {activeCategory === Category.FONTS && "Fancy Font"}
+          </h1>
         </header>
 
         <section className="flex-1 overflow-y-auto p-6 md:p-10 custom-scrollbar">
@@ -89,6 +71,7 @@ const App: React.FC = () => {
                 searchQuery={searchQuery}
                 recentEmojis={recentEmojis}
                 onCopy={handleCopy}
+                onSearchChange={setSearchQuery}
               />
             )}
             {activeCategory === Category.FONTS && (
