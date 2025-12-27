@@ -16,6 +16,7 @@ const App: React.FC = () => {
     Category.EMOJI
   );
   const [searchQuery, setSearchQuery] = useState("");
+  const [inputValue, setInputValue] = useState("");
   const [toasts, setToasts] = useState<IToast[]>([]);
 
   const addToast = useCallback((message: string) => {
@@ -69,9 +70,12 @@ const App: React.FC = () => {
             {activeCategory === Category.EMOJI && (
               <EmojiGrid
                 searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                inputValue={inputValue}
+                setInputValue={setInputValue}
+                onSearch={() => setSearchQuery(inputValue)}
                 recentEmojis={recentEmojis}
                 onCopy={handleCopy}
-                onSearchChange={setSearchQuery}
               />
             )}
             {activeCategory === Category.FONTS && (
