@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Category, Toast as IToast } from "./types";
 import Sidebar from "./components/Sidebar";
 import EmojiGrid from "./components/EmojiGrid";
@@ -66,6 +66,54 @@ const App: React.FC = () => {
     },
     [addToast]
   );
+
+  // ✅ SEO：按页面动态更新 title / description
+  useEffect(() => {
+    let title = "HandyCopy – Copy Emojis, Kaomoji & Fancy Fonts";
+    let description =
+      "HandyCopy is a clean and simple tool to copy emojis, kaomoji, and fancy fonts instantly.";
+
+    switch (activeCategory) {
+      case Category.QUICK_PICKS:
+        title = "Quick Emoji & Kaomoji Picks – HandyCopy";
+        description =
+          "Quick picks of emojis and kaomoji you use most. Copy instantly with one click.";
+        break;
+      case Category.EMOJI:
+        title = "Emoji Copy Tool – Copy & Paste Emojis | HandyCopy";
+        description =
+          "Browse and copy emojis instantly. Perfect for chat, social media, and daily use.";
+        break;
+      case Category.KAOMOJI:
+        title = "Kaomoji Copy Tool – Cute Japanese Emoticons | HandyCopy";
+        description =
+          "Copy cute Japanese kaomoji faces for messages, reactions, and fun expressions.";
+        break;
+      case Category.FONTS:
+        title = "Fancy Font Generator – Stylish Text Copy | HandyCopy";
+        description =
+          "Generate and copy fancy fonts and stylish text for bios, posts, and designs.";
+        break;
+      default:
+        title = "HandyCopy – Copy Emojis, Kaomoji & Fancy Fonts";
+        description =
+          "HandyCopy is a clean and simple tool to copy emojis, kaomoji, and fancy fonts instantly.";
+        break;
+    }
+
+    document.title = title;
+
+    const metaDesc = document.querySelector(
+      'meta[name="description"]'
+    ) as HTMLMetaElement | null;
+    if (metaDesc) metaDesc.content = description;
+
+    // ✅ canonical（需要 index.html 里有 <link rel="canonical" ...>）
+    const canonical = document.querySelector(
+      'link[rel="canonical"]'
+    ) as HTMLLinkElement | null;
+    if (canonical) canonical.href = "https://handycopy.app/";
+  }, [activeCategory]);
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#fffaf5] text-stone-800">
