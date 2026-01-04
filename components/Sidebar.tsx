@@ -12,6 +12,11 @@ const Sidebar: React.FC<SidebarProps> = ({
   setActiveCategory,
 }) => {
   const navItems = [
+    {
+      id: Category.QUICK_PICKS,
+      label: "Quick Picks",
+      icon: "fa-bolt",
+    },
     { id: Category.EMOJI, label: "Emoji Library", icon: "fa-face-smile" },
     { id: Category.KAOMOJI, label: "Cute Kaomoji", icon: "fa-heart" },
     { id: Category.FONTS, label: "Fancy Fonts", icon: "fa-font" },

@@ -5,10 +5,12 @@ import EmojiGrid from "./components/EmojiGrid";
 import FontStyles from "./components/FontStyles";
 import Toast from "./components/Toast";
 import KaomojiGrid from "./components/KaomojiGrid";
+import QuickPicks from "./components/QuickPicks";
 //import AISearch from "./components/AISearch";
 
+type CopyType = "emoji" | "kaomoji" | "font";
+
 const App: React.FC = () => {
-  // ✅ recentEmojis 一定要在这里
   const [recentEmojis, setRecentEmojis] = useState<string[]>(() => {
     return JSON.parse(localStorage.getItem("recentEmojis") || "[]");
   });
@@ -18,8 +20,9 @@ const App: React.FC = () => {
   });
 
   const [activeCategory, setActiveCategory] = useState<Category>(
-    Category.EMOJI
+    Category.QUICK_PICKS
   );
+
   const [searchQuery, setSearchQuery] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [toasts, setToasts] = useState<IToast[]>([]);
@@ -32,11 +35,11 @@ const App: React.FC = () => {
     }, 2000);
   }, []);
 
+  // ✅ 关键：不再依赖 activeCategory，而是由调用方传 type
   const handleCopy = useCallback(
-    (text: string) => {
+    (text: string, type?: CopyType) => {
       navigator.clipboard.writeText(text).then(() => {
-        // ✅ 只在 Emoji 分类记录 recent
-        if (activeCategory === Category.EMOJI) {
+        if (type === "emoji") {
           setRecentEmojis((prev) => {
             const filtered = prev.filter((e) => e !== text);
             const updated = [text, ...filtered].slice(0, 30);
@@ -45,7 +48,7 @@ const App: React.FC = () => {
           });
         }
 
-        if (activeCategory === Category.KAOMOJI) {
+        if (type === "kaomoji") {
           setRecentKaomoji((prev) => {
             const updated = [text, ...prev.filter((e) => e !== text)].slice(
               0,
@@ -61,7 +64,7 @@ const App: React.FC = () => {
         );
       });
     },
-    [addToast, activeCategory]
+    [addToast]
   );
 
   return (
@@ -76,6 +79,7 @@ const App: React.FC = () => {
       <main className="flex-1 flex flex-col min-w-0">
         <header className="h-20 border-b border-orange-100 bg-white/60 backdrop-blur-md flex items-center px-8 shrink-0">
           <h1 className="text-2xl font-black text-stone-800 tracking-tight">
+            {activeCategory === Category.QUICK_PICKS && "Quick Picks"}
             {activeCategory === Category.EMOJI && "Emoji Library"}
             {activeCategory === Category.KAOMOJI && "Cute Kaomoji"}
             {activeCategory === Category.FONTS && "Fancy Font"}
@@ -84,6 +88,17 @@ const App: React.FC = () => {
 
         <section className="flex-1 overflow-y-auto p-6 md:p-10 custom-scrollbar">
           <div className="max-w-7xl mx-auto">
+            {activeCategory === Category.QUICK_PICKS && (
+              <QuickPicks
+                // ✅ QuickPicks 内部会传 (text, "emoji"/"kaomoji")
+                onCopy={handleCopy}
+                recentEmojis={recentEmojis}
+                recentKaomoji={recentKaomoji}
+                onGoEmoji={() => setActiveCategory(Category.EMOJI)}
+                onGoKaomoji={() => setActiveCategory(Category.KAOMOJI)}
+              />
+            )}
+
             {activeCategory === Category.EMOJI && (
               <EmojiGrid
                 searchQuery={searchQuery}
@@ -92,18 +107,29 @@ const App: React.FC = () => {
                 setInputValue={setInputValue}
                 onSearch={() => setSearchQuery(inputValue)}
                 recentEmojis={recentEmojis}
-                onCopy={handleCopy}
+                // ✅ 这里强制标记为 emoji
+                onCopy={(t: string) => handleCopy(t, "emoji")}
               />
             )}
+
             {activeCategory === Category.KAOMOJI && (
-              <KaomojiGrid onCopy={handleCopy} recentKaomoji={recentKaomoji} />
+              <KaomojiGrid
+                recentKaomoji={recentKaomoji}
+                // ✅ 这里强制标记为 kaomoji
+                onCopy={(t: string) => handleCopy(t, "kaomoji")}
+              />
             )}
 
             {activeCategory === Category.FONTS && (
-              <FontStyles searchQuery={searchQuery} onCopy={handleCopy} />
+              <FontStyles
+                searchQuery={searchQuery}
+                // ✅ 可选：fonts 不需要 recent 就不传 type；想统一就传 "font"
+                onCopy={(t: string) => handleCopy(t, "font")}
+              />
             )}
+
             {/* {activeCategory === Category.AI_SEARCH && (
-              <AISearch onCopy={handleCopy} />
+              <AISearch onCopy={(t: string) => handleCopy(t)} />
             )} */}
           </div>
         </section>
