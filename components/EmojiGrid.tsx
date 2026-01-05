@@ -11,6 +11,7 @@ interface EmojiGridProps {
   setInputValue: (v: string) => void;
   onSearch: () => void;
   recentEmojis: string[];
+  onClearRecent: () => void;
   onCopy: (char: string) => void;
 }
 
@@ -21,6 +22,7 @@ const EmojiGrid: React.FC<EmojiGridProps> = ({
   setInputValue,
   onSearch,
   recentEmojis,
+  onClearRecent,
   onCopy,
 }) => {
   const isSearching = searchQuery.trim().length > 0;
@@ -117,27 +119,54 @@ const EmojiGrid: React.FC<EmojiGridProps> = ({
         </div>
       )}
 
-      {/* ✅ Recently Used */}
-      {recentEmojis.length > 0 && searchQuery.trim() === "" && (
-        <div className="space-y-6">
-          <h2 className="text-xs font-black text-orange-300 uppercase tracking-[0.2em] ml-2">
-            Recently Used
-          </h2>
+      {/* ✅ Recently Used (boxed + clear) */}
+      {searchQuery.trim() === "" && (
+        <section className="mb-8">
+          <div className="flex items-center justify-between mb-3 px-2">
+            <h2 className="text-xs font-black text-orange-300 uppercase tracking-[0.2em]">
+              Recently Used
+            </h2>
 
-          <div className="flex flex-wrap gap-4">
-            {recentEmojis.map((char) => (
-              <button
-                key={`recent-${char}`}
-                onClick={() => onCopy(char)}
-                title="Recently used"
-                className="group relative aspect-square bg-white border border-orange-50 rounded-2xl flex items-center justify-center text-3xl hover:border-orange-300 hover:shadow-xl hover:shadow-orange-100 hover:-translate-y-1 transition-all active:scale-95 w-12"
-              >
-                {char}
-                <div className="absolute inset-0 bg-orange-500 opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity" />
-              </button>
-            ))}
+            <div className="flex items-center gap-3">
+              {recentEmojis.length > 0 && (
+                <button
+                  onClick={onClearRecent}
+                  className="text-xs font-black text-stone-400 hover:text-stone-700"
+                  title="Clear recent emojis"
+                >
+                  Clear
+                </button>
+              )}
+              <span className="text-xs text-stone-400 font-semibold">
+                {recentEmojis.length
+                  ? `${recentEmojis.length} saved`
+                  : "No history yet"}
+              </span>
+            </div>
           </div>
-        </div>
+
+          <div className="rounded-3xl border border-orange-100 bg-white/60 backdrop-blur-md p-5">
+            {recentEmojis.length === 0 ? (
+              <div className="text-sm text-stone-400 font-medium">
+                Copy an emoji to see it here.
+              </div>
+            ) : (
+              <div className="flex flex-wrap gap-4">
+                {recentEmojis.map((char) => (
+                  <button
+                    key={`recent-${char}`}
+                    onClick={() => onCopy(char)}
+                    title="Recently used"
+                    className="group relative aspect-square bg-white border border-orange-50 rounded-2xl flex items-center justify-center text-3xl hover:border-orange-300 hover:shadow-xl hover:shadow-orange-100 hover:-translate-y-1 transition-all active:scale-95 w-12"
+                  >
+                    {char}
+                    <div className="absolute inset-0 bg-orange-500 opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity" />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
       )}
 
       {/* ✅ 原有分类 Emoji Grid（一行不改） */}

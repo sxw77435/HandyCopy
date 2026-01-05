@@ -5,6 +5,8 @@ type Props = {
   onCopy: (text: string, type: "emoji" | "kaomoji") => void; // ✅ 改这里
   recentEmojis: string[];
   recentKaomoji: string[];
+  onClearRecentEmojis: () => void;
+  onClearRecentKaomoji: () => void;
   onGoEmoji: () => void;
   onGoKaomoji: () => void;
 };
@@ -13,6 +15,8 @@ export default function QuickPicks({
   onCopy,
   recentEmojis,
   recentKaomoji,
+  onClearRecentEmojis,
+  onClearRecentKaomoji,
   onGoEmoji,
   onGoKaomoji,
 }: Props) {
@@ -130,8 +134,21 @@ export default function QuickPicks({
           <div className="rounded-3xl border border-orange-100 bg-white/60 backdrop-blur-md p-5">
             <div className="flex items-center justify-between mb-3">
               <div className="font-black text-stone-700">Recent Emoji</div>
-              <div className="text-xs text-stone-400 font-semibold">
-                {recentEmojis.length ? `${recentEmojis.length} saved` : "—"}
+
+              <div className="flex items-center gap-3">
+                {recentEmojis.length > 0 && (
+                  <button
+                    onClick={onClearRecentEmojis}
+                    className="text-xs font-black text-stone-400 hover:text-stone-700"
+                    title="Clear recent emojis"
+                  >
+                    Clear
+                  </button>
+                )}
+
+                <div className="text-xs text-stone-400 font-semibold">
+                  {recentEmojis.length ? `${recentEmojis.length} saved` : "—"}
+                </div>
               </div>
             </div>
 
@@ -166,8 +183,21 @@ export default function QuickPicks({
           <div className="rounded-3xl border border-orange-100 bg-white/60 backdrop-blur-md p-5">
             <div className="flex items-center justify-between mb-3">
               <div className="font-black text-stone-700">Recent Kaomoji</div>
-              <div className="text-xs text-stone-400 font-semibold">
-                {recentKaomoji.length ? `${recentKaomoji.length} saved` : "—"}
+
+              <div className="flex items-center gap-3">
+                {recentKaomoji.length > 0 && (
+                  <button
+                    onClick={onClearRecentKaomoji}
+                    className="text-xs font-black text-stone-400 hover:text-stone-700"
+                    title="Clear recent kaomoji"
+                  >
+                    Clear
+                  </button>
+                )}
+
+                <div className="text-xs text-stone-400 font-semibold">
+                  {recentKaomoji.length ? `${recentKaomoji.length} saved` : "—"}
+                </div>
               </div>
             </div>
 

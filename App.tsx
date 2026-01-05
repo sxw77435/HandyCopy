@@ -67,6 +67,18 @@ const App: React.FC = () => {
     [addToast]
   );
 
+  const clearRecentEmojis = useCallback(() => {
+    setRecentEmojis([]);
+    localStorage.removeItem("recentEmojis");
+    addToast("Cleared recent emojis");
+  }, [addToast]);
+
+  const clearRecentKaomoji = useCallback(() => {
+    setRecentKaomoji([]);
+    localStorage.removeItem("recentKaomoji");
+    addToast("Cleared recent kaomoji");
+  }, [addToast]);
+
   // ✅ SEO：按页面动态更新 title / description
   useEffect(() => {
     let title = "HandyCopy – Copy Emojis, Kaomoji & Fancy Fonts";
@@ -142,6 +154,8 @@ const App: React.FC = () => {
                 onCopy={handleCopy}
                 recentEmojis={recentEmojis}
                 recentKaomoji={recentKaomoji}
+                onClearRecentEmojis={clearRecentEmojis}
+                onClearRecentKaomoji={clearRecentKaomoji}
                 onGoEmoji={() => setActiveCategory(Category.EMOJI)}
                 onGoKaomoji={() => setActiveCategory(Category.KAOMOJI)}
               />
@@ -155,6 +169,7 @@ const App: React.FC = () => {
                 setInputValue={setInputValue}
                 onSearch={() => setSearchQuery(inputValue)}
                 recentEmojis={recentEmojis}
+                onClearRecent={clearRecentEmojis}
                 // ✅ 这里强制标记为 emoji
                 onCopy={(t: string) => handleCopy(t, "emoji")}
               />
@@ -163,6 +178,7 @@ const App: React.FC = () => {
             {activeCategory === Category.KAOMOJI && (
               <KaomojiGrid
                 recentKaomoji={recentKaomoji}
+                onClearRecent={clearRecentKaomoji}
                 // ✅ 这里强制标记为 kaomoji
                 onCopy={(t: string) => handleCopy(t, "kaomoji")}
               />
